@@ -1,24 +1,21 @@
 zabbix_export:
   version: '5.4'
-  date: '2022-08-02T19:34:34Z'
+  date: '2022-08-02T19:42:03Z'
   groups:
     -
       uuid: 7df96b18c230490a9a0a9e2307226338
       name: Templates
   templates:
     -
-      uuid: e9099720776a49e6b0b15f534919d39b
-      template: 'Template APC UPS v2'
-      name: 'Template APC UPS v2'
-      templates:
-        -
-          name: 'Template ICMP Ping Devices v2'
+      uuid: bad12b07f9264f33878f9600ed10210b
+      template: 'Template APC UPS v2 - Export'
+      name: 'Template APC UPS v2 - Export'
       groups:
         -
           name: Templates
       items:
         -
-          uuid: 8a903859597244c9b706579b4870657b
+          uuid: e5de1af006a94bacad15c6431f58c417
           name: Contact
           type: SNMP_AGENT
           snmp_oid: 'SNMPv2-MIB::sysContact.0'
@@ -33,7 +30,7 @@ zabbix_export:
               tag: Application
               value: Information(s)
         -
-          uuid: 2529e6cb9c1e4dddbcdf699fb615de33
+          uuid: 33a2d199957f4f69a2ccdbc6b840f72b
           name: 'Software version (full)'
           type: SNMP_AGENT
           snmp_oid: 'SNMPv2-MIB::sysDescr.0'
@@ -48,7 +45,7 @@ zabbix_export:
               tag: Application
               value: Information(s)
         -
-          uuid: 83f7c4ec9bb146e58daef72285a67bc8
+          uuid: 3d5d3251163046daad6edbd72321263c
           name: 'Device Location'
           type: SNMP_AGENT
           snmp_oid: 'SNMPv2-MIB::sysLocation.0'
@@ -63,7 +60,7 @@ zabbix_export:
               tag: Application
               value: Information(s)
         -
-          uuid: 845d9a644c4541dd87ef43aed94ad276
+          uuid: 6dfb920670c140988100962767271c17
           name: 'Device Name'
           type: SNMP_AGENT
           snmp_oid: 'SNMPv2-MIB::sysName.0'
@@ -78,7 +75,7 @@ zabbix_export:
               tag: Application
               value: Information(s)
         -
-          uuid: 2852a74058f54f429a9f352fb5ef8905
+          uuid: dd25e245cc8a4fa18b6821402190c802
           name: Uptime
           type: SNMP_AGENT
           snmp_oid: 'SNMPv2-MIB::sysUpTime.0'
@@ -96,7 +93,7 @@ zabbix_export:
               tag: Application
               value: Information(s)
         -
-          uuid: 353cb200eac44898a968d43e4d280570
+          uuid: 7bb2f7377112402b9f71cddcf9fe1381
           name: 'UPS battery capacity (%)'
           type: SNMP_AGENT
           snmp_oid: 1.3.6.1.4.1.318.1.1.1.2.2.1.0
@@ -111,15 +108,15 @@ zabbix_export:
               value: Operational
           triggers:
             -
-              uuid: e9a99d56923f4078acd79af0ce65aef4
-              expression: 'last(/Template APC UPS v2/upsAdvBatteryCapacity)<10'
+              uuid: c43121ab30bd44b593c7ccc08a4f8701
+              expression: 'last(/Template APC UPS v2 - Export/upsAdvBatteryCapacity)<10'
               name: 'Bateria está com a carga abaixo 10%'
               opdata: 'Valor atual: {ITEM.VALUE}%'
               priority: DISASTER
               manual_close: 'YES'
             -
-              uuid: a5d56b14b2f74e4e9a2625cebaa382c6
-              expression: 'last(/Template APC UPS v2/upsAdvBatteryCapacity)<95'
+              uuid: 9b4c2f2f0515405aa364762f83744db6
+              expression: 'last(/Template APC UPS v2 - Export/upsAdvBatteryCapacity)<95'
               name: 'Bateria está com a carga abaixo 95%'
               opdata: 'Valor atual: {ITEM.VALUE}%'
               priority: HIGH
@@ -127,9 +124,9 @@ zabbix_export:
               dependencies:
                 -
                   name: 'Bateria está com a carga abaixo 10%'
-                  expression: 'last(/Template APC UPS v2/upsAdvBatteryCapacity)<10'
+                  expression: 'last(/Template APC UPS v2 - Export/upsAdvBatteryCapacity)<10'
         -
-          uuid: 823f324d315145b5b54661a8ddafc015
+          uuid: 048c37ec7b0843918672abd979cdf9e1
           name: 'UPS battery temperature'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.318.1.1.1.2.2.2.0
@@ -143,13 +140,13 @@ zabbix_export:
               value: Operational
           triggers:
             -
-              uuid: f2005b3e66784546af7e374e94ad7124
-              expression: 'last(/Template APC UPS v2/upsAdvBatteryTemperature)>40'
+              uuid: 6d9a2b3ef00549feb5e85abb4234042c
+              expression: 'last(/Template APC UPS v2 - Export/upsAdvBatteryTemperature)>40'
               name: 'Alta temperatura da bateria ligada {HOST.NAME}'
               priority: HIGH
               manual_close: 'YES'
         -
-          uuid: a0efdd8bb5894861928145f5c8126145
+          uuid: 8c1f1c90f0bf41aba96d1f755d9c33dd
           name: 'Software version'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.318.1.1.1.1.2.1.0
@@ -164,7 +161,7 @@ zabbix_export:
               tag: Application
               value: Information(s)
         -
-          uuid: 24612a296c7545c299634c95aae8621c
+          uuid: c9cc1cb795844fc180364091075cfb7e
           name: 'Device Serial Number'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.318.1.1.1.1.2.3.0
@@ -179,7 +176,7 @@ zabbix_export:
               tag: Application
               value: Information(s)
         -
-          uuid: 64af249cd1d141f4bc55d5ebe56f3276
+          uuid: 37c4250fd1ef41869a27bdd946a0d24c
           name: 'UPS input voltage'
           type: SNMP_AGENT
           snmp_oid: 1.3.6.1.4.1.318.1.1.1.3.2.1.0
@@ -193,7 +190,7 @@ zabbix_export:
               tag: Application
               value: Operational
         -
-          uuid: 52fc6b9e79bd4382adaedc114f225909
+          uuid: 3ee122c526ca455f8e034bfa0d071cb0
           name: 'UPS current load (Amps)'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.318.1.1.1.4.2.4.0
@@ -207,7 +204,7 @@ zabbix_export:
               tag: Application
               value: Operational
         -
-          uuid: d8267cd994fb435eaac1f036a3b672b0
+          uuid: ee38c9945c85467391fda09c49785e7c
           name: 'UPS output frequency'
           type: SNMP_AGENT
           snmp_oid: 1.3.6.1.4.1.318.1.1.1.4.2.2.0
@@ -221,7 +218,7 @@ zabbix_export:
               tag: Application
               value: Operational
         -
-          uuid: 95e25691a3f8411fb1c7e26b4cc9e50b
+          uuid: a372c03b7d3243e68520dbee91334846
           name: 'UPS output load (%)'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.318.1.1.1.4.2.3.0
@@ -236,17 +233,17 @@ zabbix_export:
               value: Operational
           triggers:
             -
-              uuid: 4f66a26410f247dfb96d311913e2001d
-              expression: 'last(/Template APC UPS v2/upsAdvOutputLoad)>95'
+              uuid: 304d5441fb9d4e9ba0a9d0e913f87b44
+              expression: 'last(/Template APC UPS v2 - Export/upsAdvOutputLoad)>95'
               name: 'Carga de saída Crítica {HOST.NAME}'
               priority: HIGH
             -
-              uuid: e61d3ce1730b4d2995c5c4264c383a12
-              expression: 'last(/Template APC UPS v2/upsAdvOutputLoad)>90'
+              uuid: b80dc8add5e44d6ba4d9a62b8867c129
+              expression: 'last(/Template APC UPS v2 - Export/upsAdvOutputLoad)>90'
               name: 'Output load High on {HOST.NAME}'
               priority: WARNING
         -
-          uuid: b825529f93ab46718e69e41e868e951a
+          uuid: 8d833dfe59564a0e8a789e7f538c5ceb
           name: 'UPS output voltage'
           type: SNMP_AGENT
           snmp_oid: 1.3.6.1.4.1.318.1.1.1.4.2.1.0
@@ -260,7 +257,7 @@ zabbix_export:
               tag: Application
               value: Operational
         -
-          uuid: 1964c62a652b40dbbd437b52e3f00e3d
+          uuid: 0aef60f11ee74c49ac4ed46f213a22f8
           name: 'UPS replace battery indicator'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.318.1.1.1.2.2.4.0
@@ -275,12 +272,12 @@ zabbix_export:
               value: Operational
           triggers:
             -
-              uuid: d7b8006dec7042dba913110e6b229307
-              expression: 'last(/Template APC UPS v2/upsAdvReplaceBatteryIndicator)<>1'
+              uuid: ded9d2402b214503a55d9a4428f62546
+              expression: 'last(/Template APC UPS v2 - Export/upsAdvReplaceBatteryIndicator)<>1'
               name: 'A bateria precisa ser substituída'
               priority: DISASTER
         -
-          uuid: be51d90df0fa4f80859b59a6db2f2bb3
+          uuid: 2b04f707b18148acbf4866e366aa0f77
           name: 'UPS run time remaining'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.318.1.1.1.2.2.3.0
@@ -299,18 +296,18 @@ zabbix_export:
               value: Operational
           triggers:
             -
-              uuid: 713350be695a495d970adf8167cee01a
-              expression: 'last(/Template APC UPS v2/upsAdvRunTimeRemaining)<10'
+              uuid: aa3942550ee74f748b03c544de7565b5
+              expression: 'last(/Template APC UPS v2 - Export/upsAdvRunTimeRemaining)<10'
               name: 'Tempo de execução restante BAIXO'
               priority: HIGH
               manual_close: 'YES'
             -
-              uuid: 7eb3cf2267fc4c40b1f3c10bb0b52bf1
-              expression: 'last(/Template APC UPS v2/upsAdvRunTimeRemaining)<5'
+              uuid: bd41d9d6d5dd49f88566a3f61ed21d81
+              expression: 'last(/Template APC UPS v2 - Export/upsAdvRunTimeRemaining)<5'
               name: 'Tempo de execução restante CRITICAL{HOST.NAME}'
               priority: DISASTER
         -
-          uuid: 7489cd4953ff40739649b8972206de91
+          uuid: 6b615136cd694e3e8cbc7c355e124536
           name: 'UPS battery status'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.318.1.1.1.2.1.1.0
@@ -325,12 +322,12 @@ zabbix_export:
               value: Operational
           triggers:
             -
-              uuid: c5c44e276de64aadad4f9ed723c3840a
-              expression: 'last(/Template APC UPS v2/upsBasicBatteryStatus)=3'
+              uuid: 89a23fb92aac43c1aad02adf96f7d741
+              expression: 'last(/Template APC UPS v2 - Export/upsBasicBatteryStatus)=3'
               name: 'A energia da bateria está muito baixa para suportar a carga'
               priority: DISASTER
         -
-          uuid: 010fa8b74e1d4011a13843dc43db51b0
+          uuid: 1b2836876c0a4cf48b3a648a2288ecda
           name: 'UPS time on battery'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.318.1.1.1.2.1.2.0
@@ -348,7 +345,7 @@ zabbix_export:
               tag: Application
               value: Operational
         -
-          uuid: 1098a254c0844d14a1c37e314aedb162
+          uuid: c71affe5e51b43a7b0c23e93360e020f
           name: 'Device Model Name'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.318.1.1.1.1.1.1.0
@@ -363,7 +360,7 @@ zabbix_export:
               tag: Application
               value: Information(s)
         -
-          uuid: 675fc82222724236938509737a2a351f
+          uuid: e8a2ad7f54f549a1a84f0073848ab328
           name: 'UPS status'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.318.1.1.1.4.1.1.0
@@ -382,7 +379,7 @@ zabbix_export:
           value: 0utv13w
       valuemaps:
         -
-          uuid: 201ebe858e534a7b88feb16b249351c4
+          uuid: c8b032dc84f14d5b8b7f9b94896f4683
           name: apcBatteryReplacementStatus
           mappings:
             -
@@ -392,7 +389,7 @@ zabbix_export:
               value: '2'
               newvalue: batteryNeedsReplacing
         -
-          uuid: d3f962f7fcb94094bbf67ce8ee9bf8b7
+          uuid: dabb2942529746d9a18cb51bee67998b
           name: apcBatteryStatus
           mappings:
             -
@@ -405,7 +402,7 @@ zabbix_export:
               value: '3'
               newvalue: batteryLow
         -
-          uuid: 2af79aedc9e44dcf94b045c4a794d25e
+          uuid: bade37e0db854b6483bbf67fb08faa66
           name: apcStatus
           mappings:
             -
@@ -455,7 +452,7 @@ zabbix_export:
               newvalue: onBatteryTest
   graphs:
     -
-      uuid: 1b65d53f3ac24df780264ce391c0db8e
+      uuid: e6cabf0e3ee540aa836cb55918edb4c5
       name: 'Battery status'
       ymin_type_1: FIXED
       graph_items:
@@ -463,32 +460,32 @@ zabbix_export:
           drawtype: BOLD_LINE
           color: C80000
           item:
-            host: 'Template APC UPS v2'
+            host: 'Template APC UPS v2 - Export'
             key: upsBasicBatteryStatus
         -
           sortorder: '1'
           drawtype: BOLD_LINE
           color: 00C800
           item:
-            host: 'Template APC UPS v2'
+            host: 'Template APC UPS v2 - Export'
             key: upsAdvReplaceBatteryIndicator
     -
-      uuid: bb181f35f8934d97bc4d9e03c135695c
+      uuid: 4c594fa646034af58efd45760f5a225c
       name: 'UPS load'
       graph_items:
         -
           color: C80000
           item:
-            host: 'Template APC UPS v2'
+            host: 'Template APC UPS v2 - Export'
             key: upsAdvOutputCurrent
         -
           sortorder: '1'
           color: 0000CC
           item:
-            host: 'Template APC UPS v2'
+            host: 'Template APC UPS v2 - Export'
             key: upsAdvOutputLoad
     -
-      uuid: c5e62500d87148308e9b06f06283cfe6
+      uuid: 690edc6cc02c495b920489a91e6aa154
       name: 'UPS temperature'
       ymin_type_1: FIXED
       graph_items:
@@ -496,20 +493,20 @@ zabbix_export:
           drawtype: GRADIENT_LINE
           color: '660000'
           item:
-            host: 'Template APC UPS v2'
+            host: 'Template APC UPS v2 - Export'
             key: upsAdvBatteryTemperature
     -
-      uuid: 4cd09043c69f4c97aff4156c234d7aea
+      uuid: 0555a903a79749e5a253fb8aedf9bb25
       name: 'UPS voltage'
       graph_items:
         -
           color: 0000CC
           item:
-            host: 'Template APC UPS v2'
+            host: 'Template APC UPS v2 - Export'
             key: upsAdvOutputVoltage
         -
           sortorder: '1'
           color: CC0000
           item:
-            host: 'Template APC UPS v2'
+            host: 'Template APC UPS v2 - Export'
             key: upsAdvInputVoltage
