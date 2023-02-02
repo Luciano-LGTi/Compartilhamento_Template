@@ -70,9 +70,9 @@ https://github.com/romainsi/zabbix-VB-R-SQL
 #>
 
 ########### Adjust the following variables to match your configuration ###########
-$veeamserver = 'veeam.contoso.local'   # Machine name where Veeam is installed
-$SQLServer = 'sqlserver.contoso.local' # Database server where Veeam database is located. Change to sqlserver.contoso.local\InstanceName if you are running an SQL named instance
-$SQLIntegratedSecurity = $false        # Use Windows integrated security?
+$veeamserver = '127.0.0.1'   # Machine name where Veeam is installed
+$SQLServer = '127.0.0.1\VEEAMSQL2016' # Database server where Veeam database is located. Change to sqlserver.contoso.local\InstanceName if you are running an SQL named instance
+$SQLIntegratedSecurity = $true        # Use Windows integrated security?
 $SQLuid = 'zabbixveeam'                # SQL Username when using SQL Authentication - ignored if using Integrated security
 $SQLpwd = 'CHANGEME'                   # SQL user password
 $SQLveeamdb = 'VeeamBackup'            # Name of Veeam database. VeeamBackup is the default
