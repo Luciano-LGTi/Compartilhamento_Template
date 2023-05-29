@@ -1,0 +1,175 @@
+zabbix_export:
+  version: '5.4'
+  date: '2023-05-29T19:13:04Z'
+  groups:
+    -
+      uuid: 7df96b18c230490a9a0a9e2307226338
+      name: Templates
+  templates:
+    -
+      uuid: c178387e715d4edcb0000821a45c86c3
+      template: 'SNMP APC NetBotz Rack Monitor 200'
+      name: 'SNMP APC NetBotz Rack Monitor 200'
+      description: |
+        ## Overview
+        
+         LLD of Sensors (Only Temperature and humidity) 
+        
+        
+        Trigger Prototypes for recommended 45RH% - 55RH% humidity and 20°C - 24°C Temperature
+        
+        
+        Graph Prototypes for Temperature and Humidity. 
+        
+        
+        Triggers names contain the last value that cause the trigger so you can see the temp/hum in the alert.
+      groups:
+        -
+          name: Templates
+      discovery_rules:
+        -
+          uuid: d377dbbe307f4150a61d40e2aa65889d
+          name: 'Internal APC Sensor'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#SNMPVALUE},1.3.6.1.4.1.318.1.1.10.4.2.3.1.3.0]'
+          key: apc.enviro.sensor
+          delay: 1d
+          lifetime: 5d
+          item_prototypes:
+            -
+              uuid: 211c586ff1ad4fc6bb16b734918b01ba
+              name: '{#SNMPVALUE} Sensor ({#SNMPINDEX}) Humidity'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.318.1.1.10.4.2.3.1.6.0.{#SNMPINDEX}'
+              key: 'apc.enviro.sensor.int.hum.["{#SNMPINDEX}"]'
+              delay: 3m
+              units: '%RH'
+              tags:
+                -
+                  tag: Application
+                  value: 'Environment Monitor'
+              trigger_prototypes:
+                -
+                  uuid: 630fd236bdb348b3988874796ff35d6d
+                  expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.enviro.sensor.int.hum.["{#SNMPINDEX}"],#3)>65'
+                  recovery_mode: RECOVERY_EXPRESSION
+                  recovery_expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.enviro.sensor.int.hum.["{#SNMPINDEX}"],#3)<65'
+                  name: '{#SNMPVALUE} Sensor ({#SNMPINDEX}) {ITEM.LASTVALUE} :: Humidity > 65 RH%'
+                  priority: HIGH
+                  manual_close: 'YES'
+                  dependencies:
+                    -
+                      name: '{#SNMPVALUE} Sensor ({#SNMPINDEX}) {ITEM.LASTVALUE}  :: Humidity > 70 RH%'
+                      expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.enviro.sensor.int.hum.["{#SNMPINDEX}"],#3)>=70'
+                      recovery_expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.enviro.sensor.int.hum.["{#SNMPINDEX}"],#3)<70'
+                -
+                  uuid: bdc914bed7df402e8fa5a85bfe000e14
+                  expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.enviro.sensor.int.hum.["{#SNMPINDEX}"],#3)>=70'
+                  recovery_mode: RECOVERY_EXPRESSION
+                  recovery_expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.enviro.sensor.int.hum.["{#SNMPINDEX}"],#3)<70'
+                  name: '{#SNMPVALUE} Sensor ({#SNMPINDEX}) {ITEM.LASTVALUE}  :: Humidity > 70 RH%'
+                  priority: DISASTER
+                  manual_close: 'YES'
+                -
+                  uuid: 50b98a67808a49cda5ec88dd51c8e7a7
+                  expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.enviro.sensor.int.hum.["{#SNMPINDEX}"],#3)<20'
+                  recovery_mode: RECOVERY_EXPRESSION
+                  recovery_expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.enviro.sensor.int.hum.["{#SNMPINDEX}"],#3)>20'
+                  name: '{#SNMPVALUE} Sensor ({#SNMPINDEX}) {ITEM.LASTVALUE}  :: Humidiy< 20 RH%'
+                  priority: HIGH
+                  manual_close: 'YES'
+                  dependencies:
+                    -
+                      name: '{#SNMPVALUE} Sensor ({#SNMPINDEX}) {ITEM.LASTVALUE} :: Humidty < 15 RH%'
+                      expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.enviro.sensor.int.hum.["{#SNMPINDEX}"],#3)<=15'
+                      recovery_expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.enviro.sensor.int.hum.["{#SNMPINDEX}"],#3)>15'
+                -
+                  uuid: e6855e9f9f6f49e999ebd37caf65111f
+                  expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.enviro.sensor.int.hum.["{#SNMPINDEX}"],#3)<=15'
+                  recovery_mode: RECOVERY_EXPRESSION
+                  recovery_expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.enviro.sensor.int.hum.["{#SNMPINDEX}"],#3)>15'
+                  name: '{#SNMPVALUE} Sensor ({#SNMPINDEX}) {ITEM.LASTVALUE} :: Humidty < 15 RH%'
+                  priority: DISASTER
+                  manual_close: 'YES'
+            -
+              uuid: 19beee267da84a988e98469bb2f3ac9d
+              name: '{#SNMPVALUE} Sensor ({#SNMPINDEX}) Temperature'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.318.1.1.10.4.2.3.1.5.0.{#SNMPINDEX}'
+              key: 'apc.enviro.sensor.int.temp.["{#SNMPINDEX}"]'
+              delay: 3m
+              units: °C
+              tags:
+                -
+                  tag: Application
+                  value: 'Environment Monitor'
+              trigger_prototypes:
+                -
+                  uuid: 129811e00d33404393784179fb9c63fe
+                  expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.enviro.sensor.int.temp.["{#SNMPINDEX}"],#3)<=15'
+                  recovery_mode: RECOVERY_EXPRESSION
+                  recovery_expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.enviro.sensor.int.temp.["{#SNMPINDEX}"],#3)>15'
+                  name: '{#SNMPVALUE} Sensor ({#SNMPINDEX}) {ITEM.LASTVALUE} :: Temperature < 15°C'
+                  priority: HIGH
+                  manual_close: 'YES'
+                -
+                  uuid: 84f4b8e2755e4e76aaefa31749a381e8
+                  expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.enviro.sensor.int.temp.["{#SNMPINDEX}"],#3)>=30'
+                  recovery_mode: RECOVERY_EXPRESSION
+                  recovery_expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.enviro.sensor.int.temp.["{#SNMPINDEX}"],#3)<30'
+                  name: '{#SNMPVALUE} Sensor ({#SNMPINDEX}) {ITEM.LASTVALUE} :: Temperature > 30°C'
+                  priority: HIGH
+                  manual_close: 'YES'
+                  dependencies:
+                    -
+                      name: '{#SNMPVALUE} Sensor ({#SNMPINDEX}) {ITEM.LASTVALUE} :: Temperature > 35°C'
+                      expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.enviro.sensor.int.temp.["{#SNMPINDEX}"],#3)>=35'
+                      recovery_expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.enviro.sensor.int.temp.["{#SNMPINDEX}"],#3)<35'
+                -
+                  uuid: 51479612996f4b2fb2d2a77ba5585551
+                  expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.enviro.sensor.int.temp.["{#SNMPINDEX}"],#3)>=35'
+                  recovery_mode: RECOVERY_EXPRESSION
+                  recovery_expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.enviro.sensor.int.temp.["{#SNMPINDEX}"],#3)<35'
+                  name: '{#SNMPVALUE} Sensor ({#SNMPINDEX}) {ITEM.LASTVALUE} :: Temperature > 35°C'
+                  priority: DISASTER
+                  manual_close: 'YES'
+        -
+          uuid: 657974c3c6524d06b8a4abef769a63d1
+          name: 'Internal APC Smoke Sensor'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.318.1.1.10.4.7.9.1.3.0]'
+          key: apc.smoke.sensor
+          delay: 1d
+          lifetime: 5d
+          item_prototypes:
+            -
+              uuid: afd624e94a86411a99e602d793646f13
+              name: '{#SNMPVALUE} Sensor ({#SNMPINDEX}) Smoke'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.318.1.1.10.4.7.9.1.5.0.{#SNMPINDEX}'
+              key: 'apc.sensor.smoke.[{#SNMPINDEX}]'
+              delay: 3m
+              valuemap:
+                name: Sensor
+              trigger_prototypes:
+                -
+                  uuid: 4534888f03ee4ed899801e8a89dcfc3a
+                  expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.sensor.smoke.[{#SNMPINDEX}],#3)<>1'
+                  recovery_mode: RECOVERY_EXPRESSION
+                  recovery_expression: 'last(/SNMP APC NetBotz Rack Monitor 200/apc.sensor.smoke.[{#SNMPINDEX}],#3)=1'
+                  name: '{#SNMPVALUE} Smoke Sensor ({#SNMPINDEX}) = {ITEM.LASTVALUE}'
+                  priority: HIGH
+      valuemaps:
+        -
+          uuid: 2fa1fb67c1914128beef3119be99ccd3
+          name: Sensor
+          mappings:
+            -
+              value: '1'
+              newvalue: Normal
+            -
+              value: '0'
+              newvalue: Problem
+            -
+              value: '2'
+              newvalue: Problem
